@@ -7,14 +7,22 @@ window.addEventListener('load', init);
 
 function init() {
   const params = new URLSearchParams(location.search);
-  getData(`users/${params.get('userid')}`).then((data) => {
-    const markup = userIdMarkup(data);
-    addMarkup(markup, tablBodyUserEl);
-  });
-  getData(`albums?userId=${params.get('userid')}`).then((data) => {
-    const markup = createAlbumList(data);
-    addMarkup(markup, userAlbumListEl);
-  });
+  getData(`users/${params.get('userid')}`)
+    .then((data) => {
+      const markup = userIdMarkup(data);
+      addMarkup(markup, tablBodyUserEl);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  getData(`albums?userId=${params.get('userid')}`)
+    .then((data) => {
+      const markup = createAlbumList(data);
+      addMarkup(markup, userAlbumListEl);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 }
 
 userAlbumListEl.addEventListener('click', onAlbumClick);
